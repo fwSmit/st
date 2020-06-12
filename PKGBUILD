@@ -4,7 +4,7 @@
 # Contributor: Christoph Vigano <mail@cvigano.de>
 
 pkgname=st
-pkgver=0.8.3
+pkgver=0.8.2
 pkgrel=1
 pkgdesc='A simple virtual terminal emulator for X.'
 arch=('i686' 'x86_64' 'armv7h')
@@ -16,6 +16,7 @@ source=(https://dl.suckless.org/$pkgname/$pkgname-$pkgver.tar.gz
 		st-dracula-0.8.2.diff
 		st-scrollback-20200419-72e3f6c.diff
 		st-scrollback-mouse-0.8.2.diff
+		st-scrollback-mouse-20191024-a2c479c.diff
         README.terminfo.rst)
 sha256sums=('939ae3da237e7c9489694853c205c7cbd5f2a2f0c17fe41a07477f1df8e28552'
             'f9deea445a5c6203a0e8e699f3c3b55e27275f17fb408562c4dd5d649edeea23'
@@ -28,8 +29,12 @@ _makeopts="--directory=$_sourcedir"
 
 prepare() {
   patch --directory="$_sourcedir" --strip=0 < terminfo.patch
+
+  echo "applying scrollback patch"
   patch -p1 --directory="$_sourcedir" < st-scrollback-20200419-72e3f6c.diff
+  # patch -p1 --directory="$_sourcedir" <	st-scrollback-mouse-0.8.2.diff
   patch -p1 --directory="$_sourcedir" <	st-scrollback-mouse-0.8.2.diff
+  echo "applying dracula patch"
   patch -p1 --directory="$_sourcedir" < st-dracula-0.8.2.diff
   # This package provides a mechanism to provide a custom config.h. Multiple
   # configuration states are determined by the presence of two files in
@@ -83,4 +88,11 @@ sha256sums=('939ae3da237e7c9489694853c205c7cbd5f2a2f0c17fe41a07477f1df8e28552'
             '5eb8e0375fda9373c3b16cabe2879027300e73e48dbd9782e54ffd859e84fb7e'
             '1e41fe17a5ef5a8194eea07422b49d815e2c2bb4d58d84771f793be423005310'
             '6103a650f62b5d07672eee9e01e3f4062525083da6ba063e139ca7d9fd58a1ba'
+            '0ebcbba881832adf9c98ce9fe7667c851d3cc3345077cb8ebe32702698665be2')
+sha256sums=('939ae3da237e7c9489694853c205c7cbd5f2a2f0c17fe41a07477f1df8e28552'
+            'f9deea445a5c6203a0e8e699f3c3b55e27275f17fb408562c4dd5d649edeea23'
+            '5eb8e0375fda9373c3b16cabe2879027300e73e48dbd9782e54ffd859e84fb7e'
+            '1e41fe17a5ef5a8194eea07422b49d815e2c2bb4d58d84771f793be423005310'
+            '6103a650f62b5d07672eee9e01e3f4062525083da6ba063e139ca7d9fd58a1ba'
+            '319458d980195d18fa0f81a6898d58f8d046c5ff982ab872d741f54bb60e267d'
             '0ebcbba881832adf9c98ce9fe7667c851d3cc3345077cb8ebe32702698665be2')
